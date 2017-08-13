@@ -5,6 +5,9 @@ import LogLevel from 'jac/logger/LogLevel';
 import ConsoleTarget from 'jac/logger/ConsoleTarget';
 import JacEvent from 'jac/events/JacEvent';
 import GlobalEventBus from 'jac/events/GlobalEventBus';
+import UIManager from 'UIManager';
+
+console.log('test');
 
 //Custom Classes
 import ReadyManager from 'ready/ReadyManager';
@@ -18,6 +21,8 @@ l.verboseFilter = (VerboseLevel.NORMAL | VerboseLevel.TIME | VerboseLevel.LEVEL)
 //l.levelFilter = (LogLevel.DEBUG | LogLevel.INFO | LogLevel.WARNING | LogLevel.ERROR);
 l.levelFilter = (LogLevel.INFO | LogLevel.WARNING | LogLevel.ERROR);
 
+l.debug('HERE!');
+
 let readyManager = new ReadyManager();
 readyManager.ready()
     .then(($response) => {
@@ -26,6 +31,9 @@ readyManager.ready()
     let geb = new GlobalEventBus();
 
     //Start App Here
+    let uiManager = new UIManager(document);
+    uiManager.init();
+
 
 })
 .catch(($error) => {

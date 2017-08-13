@@ -3,7 +3,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //const WebpackAutoInject = require('./forWebPack/webpack-auto-inject-version');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
+//const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
@@ -99,7 +99,5 @@ module.exports = {
             })
         }
     ],
-
     devtool: 'source-map'
-
 };

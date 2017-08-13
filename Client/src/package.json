@@ -27,7 +27,7 @@
         "webpack": "^2.3.3"
     },
     "scripts": {
-        "watch": "webpack --env.patch --colors --progress --watch"
+        "watch": "webpack --colors --progress --watch"
     },
     "repository": {
         "type": "git",
