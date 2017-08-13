@@ -6,11 +6,11 @@ import GlobalEventBus from 'jac/events/GlobalEventBus';
 import JacEvent from 'jac/events/JacEvent';
 
 class WSManager extends EventDispatcher {
-    constructor() {
+    constructor($doc) {
         super();
 
         this.geb = new GlobalEventBus();
-
+        this.doc = $doc;
         this.connect = undefined;
     }
 
@@ -18,17 +18,18 @@ class WSManager extends EventDispatcher {
         l.debug('WS Manager Init');
         let self = this;
 
-        this.connection = new WebSocket('ws://192.168.1.95:8888');
+        let host = window.document.location.host.replace(/:.*/, '');
+        self.connection = new WebSocket('ws://' + host + ':8888');
 
-        this.connection.onopen = () => {
+        self.connection.onopen = () => {
             this.connection.send('Ping');
         };
 
-        this.connection.onerror = ($err) => {
+        self.connection.onerror = ($err) => {
             l.error('WebSocket error: ', $err);
         };
 
-        this.connection.onmessage = ($evt) => {
+        self.connection.onmessage = ($evt) => {
             l.debug('Caught Message from Server: ', $evt.data);
         };
 

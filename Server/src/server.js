@@ -1,7 +1,9 @@
-const WebSocketServer = require('websocket').server;
-
+const http = require('http');
 const path = require('path');
+const url = require('url');
 const express = require('express');
+const WebSocket = require('ws');
+
 const app = express();
 
 let connections = [];
@@ -9,21 +11,35 @@ let connections = [];
 
 app.use('/', express.static('../../dist'));
 
+/*
 app.listen(8888, '192.168.1.95', function () {
     console.log('Example app listening on port 80!')
 });
+*/
 
-const wsServer = new WebSocketServer({
-    httpServer: app,
-    fragmentOutgoingMessages: false,
-    autoAcceptConnections: true
-});
+const server = http.createServer(app);
+
+const wss = new WebSocket.Server({server});
+
 
 function originIsAllowed($origin) {
     //TODO: filter origins
     return true;
 }
 
+wss.on('connection', ($ws, $req) => {
+    const location = url.parse($req.url, true);
+
+    $ws.on('message', ($msg) => {
+        console.log('Message: ', $msg);
+    });
+
+});
+
+server.listen(8888, () => {
+    console.log('Listening on %d', server.address().port);
+});
+/*
 wsServer.on('request', ($req) => {
     console.log('Request: ', $req);
     //Validate Origin
@@ -68,5 +84,5 @@ wsServer.on('request', ($req) => {
         }
 
     });
-
 });
+*/
