@@ -58,7 +58,7 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin(['dist'], {
-            root: __dirname + '/../',
+            root: __dirname + '/../../',
             verbose: true,
             dry: false,
             exclude: []
@@ -67,7 +67,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'html/index.html',
-            hash: true,
+            hash: false,
             chunks: [
                 'indexEntry'
             ]

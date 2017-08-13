@@ -9,14 +9,14 @@ let connections = [];
 
 app.use('/', express.static('../../dist'));
 
-app.listen(80, function () {
+app.listen(8888, '192.168.1.95', function () {
     console.log('Example app listening on port 80!')
 });
 
 const wsServer = new WebSocketServer({
     httpServer: app,
     fragmentOutgoingMessages: false,
-    autoAcceptConnections: false
+    autoAcceptConnections: true
 });
 
 function originIsAllowed($origin) {
@@ -25,6 +25,7 @@ function originIsAllowed($origin) {
 }
 
 wsServer.on('request', ($req) => {
+    console.log('Request: ', $req);
     //Validate Origin
     if(!originIsAllowed($req.origin)){
         $req.reject();

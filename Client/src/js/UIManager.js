@@ -29,6 +29,7 @@ class UIManager extends EventDispatcher {
 
     handleSendButtonClick($evt){
         l.debug('Caught Send Button Click');
+
     }
 }
 

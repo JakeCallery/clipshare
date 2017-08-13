@@ -6,8 +6,7 @@ import ConsoleTarget from 'jac/logger/ConsoleTarget';
 import JacEvent from 'jac/events/JacEvent';
 import GlobalEventBus from 'jac/events/GlobalEventBus';
 import UIManager from 'UIManager';
-
-console.log('test');
+import WSManager from 'WSManager';
 
 //Custom Classes
 import ReadyManager from 'ready/ReadyManager';
@@ -18,10 +17,7 @@ import '../css/main.css';
 
 l.addLogTarget(new ConsoleTarget());
 l.verboseFilter = (VerboseLevel.NORMAL | VerboseLevel.TIME | VerboseLevel.LEVEL);
-//l.levelFilter = (LogLevel.DEBUG | LogLevel.INFO | LogLevel.WARNING | LogLevel.ERROR);
-l.levelFilter = (LogLevel.INFO | LogLevel.WARNING | LogLevel.ERROR);
-
-l.debug('HERE!');
+l.levelFilter = (LogLevel.DEBUG | LogLevel.INFO | LogLevel.WARNING | LogLevel.ERROR);
 
 let readyManager = new ReadyManager();
 readyManager.ready()
@@ -33,6 +29,9 @@ readyManager.ready()
     //Start App Here
     let uiManager = new UIManager(document);
     uiManager.init();
+
+    let wsManager = new WSManager();
+    wsManager.init();
 
 
 })
