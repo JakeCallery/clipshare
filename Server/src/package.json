@@ -1,0 +1,16 @@
+{
+  "name": "clipshareserver",
+  "version": "0.0.0",
+  "description": "For sharing images from a clipboard to other devices",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jake Callery",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.15.4",
+    "path": "0.12.7",
+    "websocket": "1.0.24"
+  }
+}
