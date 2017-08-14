@@ -33,7 +33,13 @@ wss.on('connection', ($connection, $req) => {
         let msgType = typeof $msg;
         console.log('Type of message: ', msgType);
 
-
+        //Send message to other clients
+        for(let i = 0; i < connections.length; i++){
+            let conn = connections[i];
+            if(conn !== $connection) {
+                conn.send($msg);
+            }
+        }
         console.log('Message: ', $msg);
     });
 
