@@ -21,6 +21,8 @@ class UIManager extends EventDispatcher {
         //DOM Elements
         self.sendPingButton = this.doc.getElementById('sendPingButton');
         self.sendImageButton = this.doc.getElementById('sendImageButton');
+        self.fullScreenButton = this.doc.getElementById('fullScreenButton');
+
         self.pasteCanvas = this.doc.getElementById('pasteCanvas');
         self.pasteCanvasCtx = pasteCanvas.getContext('2d');
         self.pasteCanvas.width = 200;
@@ -31,12 +33,27 @@ class UIManager extends EventDispatcher {
         self.sendImageClickDelegate = EventUtils.bind(self, self.handleSendImageClick);
         self.pastedImageDelegate = EventUtils.bind(self, self.handlePastedImage);
         self.newBase64DataDelegate = EventUtils.bind(self, self.handleNewBase64Image);
+        self.fullScreenClickDelegate = EventUtils.bind(self, self.handleFullScreenClick);
 
         //Events
         self.sendPingButton.addEventListener('click', self.sendPingClickDelegate);
         self.sendImageButton.addEventListener('click', self.sendImageClickDelegate);
+        self.fullScreenButton.addEventListener('click', self.fullScreenClickDelegate);
         self.geb.addEventListener('pastedimage', self.pastedImageDelegate);
         self.geb.addEventListener('newimagebase64data', self.newBase64DataDelegate);
+
+    }
+
+    handleFullScreenClick($evt) {
+        l.debug('Caught Full Screen Click');
+        if(this.pasteCanvas.webkitRequestFullscreen) {
+            this.pasteCanvas.webkitRequestFullscreen();
+        } else if(this.pasteCanvas.mozRequestFullScreen) {
+            this.pasteCanvas.mozRequestFullScreen();
+        } else {
+            l.error('NO Full Screen');
+        }
+
     }
 
     handleNewBase64Image($evt){
@@ -68,6 +85,9 @@ class UIManager extends EventDispatcher {
 
                 self.pasteCanvas.width = img.width;
                 self.pasteCanvas.height = img.height;
+
+                self.pasteCanvas.style.width = img.width;
+                self.pasteCanvas.style.height = img.height;
 
                 l.debug('Canvas: ', self.pasteCanvas.width, self.pasteCanvas.height);
 
