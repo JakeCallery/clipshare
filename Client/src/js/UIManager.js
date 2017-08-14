@@ -29,7 +29,7 @@ class UIManager extends EventDispatcher {
 
     handleSendButtonClick($evt){
         l.debug('Caught Send Button Click');
-
+        this.geb.dispatchEvent(new JacEvent('requestsend', 'ping'));
     }
 }
 

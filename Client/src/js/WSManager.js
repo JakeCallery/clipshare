@@ -12,6 +12,13 @@ class WSManager extends EventDispatcher {
         this.geb = new GlobalEventBus();
         this.doc = $doc;
         this.connect = undefined;
+        let self = this;
+
+        //Delegates
+        this.sendRequestDelegate = EventUtils.bind(self, self.handleSendRequest);
+
+        //Events
+        this.geb.addEventListener('requestsend', self.sendRequestDelegate);
     }
 
     init() {
@@ -22,7 +29,8 @@ class WSManager extends EventDispatcher {
         self.connection = new WebSocket('ws://' + host + ':8888');
 
         self.connection.onopen = () => {
-            this.connection.send('Ping');
+            //this.connection.send('Ping');
+            l.debug('Websocket Connected');
         };
 
         self.connection.onerror = ($err) => {
@@ -33,6 +41,11 @@ class WSManager extends EventDispatcher {
             l.debug('Caught Message from Server: ', $evt.data);
         };
 
+    }
+
+    handleSendRequest($evt) {
+        l.debug('Sending ', $evt.data);
+        this.connection.send($evt.data);
     }
 }
 
