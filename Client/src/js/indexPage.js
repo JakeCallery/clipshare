@@ -7,8 +7,7 @@ import JacEvent from 'jac/events/JacEvent';
 import GlobalEventBus from 'jac/events/GlobalEventBus';
 import UIManager from 'UIManager';
 import WSManager from 'WSManager';
-
-//Custom Classes
+import ClipboardManager from 'ClipboardManager';
 import ReadyManager from 'ready/ReadyManager';
 
 //Import through loaders
@@ -33,7 +32,8 @@ readyManager.ready()
     let wsManager = new WSManager();
     wsManager.init();
 
-
+    let clipManager = new ClipboardManager(window, document);
+    clipManager.init();
 })
 .catch(($error) => {
     l.error('Ready ERROR: ', $error);
