@@ -31,7 +31,7 @@ wss.on('connection', ($connection, $req) => {
 
     $connection.on('message', ($msg) => {
         let msgType = typeof $msg;
-        console.log('Type of message: ', msgType);
+        console.log('Sending message of Type: ', msgType);
 
         //Send message to other clients
         for(let i = 0; i < connections.length; i++){
@@ -40,7 +40,7 @@ wss.on('connection', ($connection, $req) => {
                 conn.send($msg);
             }
         }
-        console.log('Message: ', $msg);
+        //console.log('Message: ', $msg);
     });
 
     $connection.on('close', ($code, $reason) => {

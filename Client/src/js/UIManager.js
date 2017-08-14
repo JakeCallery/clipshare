@@ -4,6 +4,7 @@ import EventUtils from 'jac/utils/EventUtils';
 import EventDispatcher from 'jac/events/EventDispatcher';
 import GlobalEventBus from 'jac/events/GlobalEventBus';
 import JacEvent from 'jac/events/JacEvent';
+import BlobUtils from 'jac/utils/BlobUtils';
 
 class UIManager extends EventDispatcher {
     constructor($doc) {
@@ -29,11 +30,28 @@ class UIManager extends EventDispatcher {
         self.sendPingClickDelegate = EventUtils.bind(self, self.handleSendPingClick);
         self.sendImageClickDelegate = EventUtils.bind(self, self.handleSendImageClick);
         self.pastedImageDelegate = EventUtils.bind(self, self.handlePastedImage);
+        self.newBase64DataDelegate = EventUtils.bind(self, self.handleNewBase64Image);
 
         //Events
         self.sendPingButton.addEventListener('click', self.sendPingClickDelegate);
         self.sendImageButton.addEventListener('click', self.sendImageClickDelegate);
         self.geb.addEventListener('pastedimage', self.pastedImageDelegate);
+        self.geb.addEventListener('newimagebase64data', self.newBase64DataDelegate);
+    }
+
+    handleNewBase64Image($evt){
+        l.debug('Caught new base 64 data');
+        let self = this;
+        let img = new Image();
+        img.addEventListener('load', () => {
+            l.debug('Image Loaded');
+            self.pasteCanvas.width = img.width;
+            self.pasteCanvas.height = img.height;
+            self.pasteCanvasCtx.clearRect(0,0, self.pasteCanvas.width, self.pasteCanvas.height);
+            self.pasteCanvasCtx.drawImage(img, 0,0);
+        });
+        l.debug('Loading Image');
+        img.src = $evt.data;
     }
 
     handlePastedImage($evt){
@@ -63,11 +81,12 @@ class UIManager extends EventDispatcher {
 
     handleSendImageClick($evt){
         l.debug('caught send image click');
+        this.geb.dispatchEvent(new JacEvent('requestsendimage', this.pasteCanvas.toDataURL('image/png')));
     }
 
     handleSendPingClick($evt){
         l.debug('Caught Send Button Click');
-        this.geb.dispatchEvent(new JacEvent('requestsend', 'ping'));
+        this.geb.dispatchEvent(new JacEvent('requestsendstring', 'ping'));
     }
 }
 
