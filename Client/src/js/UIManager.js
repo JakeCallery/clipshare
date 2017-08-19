@@ -18,6 +18,12 @@ class UIManager extends EventDispatcher {
         l.debug('UI Manager Init');
         let self = this;
 
+        l.debug('Absolute Screen Width: ' + window.screen.width);
+        l.debug('Absolute Screen Height: ' + window.screen.height);
+
+        l.debug('Available Screen Width: ' + window.screen.availWidth);
+        l.debug('Available Screen Width: ' + window.screen.availHeight);
+
         //DOM Elements
         self.sendPingButton = this.doc.getElementById('sendPingButton');
         self.sendImageButton = this.doc.getElementById('sendImageButton');
@@ -34,6 +40,7 @@ class UIManager extends EventDispatcher {
         self.pastedImageDelegate = EventUtils.bind(self, self.handlePastedImage);
         self.newBase64DataDelegate = EventUtils.bind(self, self.handleNewBase64Image);
         self.fullScreenClickDelegate = EventUtils.bind(self, self.handleFullScreenClick);
+        self.fullScreenChangeDelegate = EventUtils.bind(self, self.handleFullScreenChange);
 
         //Events
         self.sendPingButton.addEventListener('click', self.sendPingClickDelegate);
@@ -41,7 +48,20 @@ class UIManager extends EventDispatcher {
         self.fullScreenButton.addEventListener('click', self.fullScreenClickDelegate);
         self.geb.addEventListener('pastedimage', self.pastedImageDelegate);
         self.geb.addEventListener('newimagebase64data', self.newBase64DataDelegate);
+        self.doc.addEventListener('fullscreenchange', self.fullScreenChangeDelegate);
+        self.doc.addEventListener('webkitfullscreenchange', self.fullScreenChangeDelegate);
+        self.doc.addEventListener('mozfullscreenchange', self.fullScreenChangeDelegate);
+        self.doc.addEventListener('msfullscreenchange', self.fullScreenChangeDelegate);
 
+    }
+
+    handleFullScreenChange($evt) {
+        l.debug('FullScreen Changed');
+        l.debug('Absolute Screen Width: ' + window.screen.width);
+        l.debug('Absolute Screen Height: ' + window.screen.height);
+
+        l.debug('Available Screen Width: ' + window.screen.availWidth);
+        l.debug('Available Screen Width: ' + window.screen.availHeight);
     }
 
     handleFullScreenClick($evt) {
