@@ -29,7 +29,9 @@ class WSManager extends EventDispatcher {
         let self = this;
 
         let host = window.document.location.host.replace(/:.*/, '');
-        self.connection = new WebSocket('ws://' + host + ':8888');
+        let websocketURL = 'ws://' + host + ':' + window.document.location.port;
+        l.debug('Websocket URL: ' + websocketURL);
+        self.connection = new WebSocket(websocketURL);
 
         self.connection.onopen = () => {
             //this.connection.send('Ping');
